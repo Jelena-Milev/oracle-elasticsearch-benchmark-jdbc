@@ -1,0 +1,20 @@
+{
+  "company_plain": {
+    "mappings": {
+      "id": { "type": "long" },
+      "company_name": { "type": "text" },
+      "address": { "type": "text" },
+      "company_size": { "type": "keyword" },
+      "city": { "type": "keyword" },
+      "postal_code": { "type": "keyword" },
+      "state": { "type": "keyword" },
+      "country": { "type": "keyword" },
+      "territory": { "type": "keyword" },
+      "contact_person_first_name": { "type": "keyword" },
+      "contact_person_last_name": { "type": "keyword" },
+      "contact_person_phone": { "type": "keyword" },
+      "contact_person_mail": { "type": "keyword" }
+    }
+  }
+}
+

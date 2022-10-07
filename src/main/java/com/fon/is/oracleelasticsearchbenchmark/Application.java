@@ -1,12 +1,12 @@
 package com.fon.is.oracleelasticsearchbenchmark;
 
+import com.fon.is.oracleelasticsearchbenchmark.queries.NewOracleQueries;
 import org.elasticsearch.xpack.sql.jdbc.EsDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.time.Duration;
 import java.time.Instant;
@@ -39,18 +39,18 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		fetchDataElastic();
-		fetchDataOracle();
+		fetchDataOracle(NewOracleQueries.AFTER_B_TREE_INDEXING);
 	}
 
-	private void fetchDataOracle() throws SQLException, ClassNotFoundException {
+	private void fetchDataOracle(String query) throws SQLException, ClassNotFoundException {
 		System.out.println("===============ORACLE=================");
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 
-		Instant start = Instant.now();
+//		Instant start = Instant.now();
 		try (Connection con = DriverManager.getConnection(oracleUrl, oracleUser, oraclePassword);) {
 			Statement statement = con.createStatement();
-			ResultSet results = statement.executeQuery("SELECT * FROM company WHERE city LIKE 'city'");
+			Instant start = Instant.now();
+			ResultSet results = statement.executeQuery(query);
 			Instant end = Instant.now();
 			System.out.println("Duration: " + Duration.between(start, end));
 			int rowCount = 0;
@@ -63,7 +63,7 @@ public class Application implements CommandLineRunner {
 		}
 	}
 
-	private void fetchDataElastic() throws SQLException {
+	private void fetchDataElastic(String query) throws SQLException {
 		System.out.println("===============ELASTIC=================");
 
 		Properties connectionProperties = new Properties();
@@ -77,7 +77,7 @@ public class Application implements CommandLineRunner {
 		Connection connection = dataSource.getConnection();
 		try (Statement statement = connection.createStatement()) {
 //			ResultSet results = statement.executeQuery("SELECT * FROM company WHERE r_id = 2");
-			ResultSet results = statement.executeQuery("SELECT * FROM company WHERE city LIKE 'city'");
+			ResultSet results = statement.executeQuery(query);
 			Instant end = Instant.now();
 			System.out.println("Duration: " + Duration.between(start, end));
 			int rowCount = 0;
@@ -85,6 +85,16 @@ public class Application implements CommandLineRunner {
 				++rowCount;
 			}
 			System.out.println("result.size: " + rowCount);
+
+
+//			List<Long> ids = new ArrayList();
+//			while (results.next()) {
+//				++rowCount;
+//				ids.add(results.getLong("company_id"));
+//				System.out.println("Id " + rowCount + ": " + results.getLong("company_id"));
+//			}
+//			System.out.println("result.size: " + rowCount);
+//			ids.forEach(System.out::println);
 		}
 	}
 }

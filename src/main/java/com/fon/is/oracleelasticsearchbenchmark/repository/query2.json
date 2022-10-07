@@ -1,0 +1,23 @@
+{
+  "sale_plain": {
+    "mappings": {
+      "id": { "type": "long" },
+      "order_id": { "type": "keyword" },
+      "order_date": {
+        "type": "date",
+        "format": "date_optional_time"
+      },
+      "country": { "type": "keyword" },
+      "region": { "type": "keyword" },
+      "order_priority": { "type": "keyword" },
+      "ship_date": {
+        "type": "date",
+        "format": "date_optional_time"
+      },
+      "units_sold": { "type": "integer" },
+      "item_type": { "type": "keyword" },
+      "sales_channel": { "type": "keyword" }
+    }
+  }
+}
+

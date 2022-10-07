@@ -1,0 +1,43 @@
+{
+  "company": {
+    "mappings": {
+      "id": { "type": "long" },
+      "company_name": { "type": "text" },
+      "address": { "type": "text" },
+      "company_size": { "type": "keyword" },
+      "city": { "type": "keyword" },
+      "postal_code": { "type": "keyword" },
+      "state": { "type": "keyword" },
+      "country": { "type": "keyword" },
+      "territory": { "type": "keyword" },
+      "contact_person_first_name": { "type": "keyword" },
+      "contact_person_last_name": { "type": "keyword" },
+      "contact_person_phone": { "type": "keyword" },
+      "contact_person_mail": { "type": "keyword" },
+      "sales": {
+        "type": "nested",
+        "include_in_parent": true,
+        "properties": {
+          "id": { "type": "long" },
+          "order_id": { "type": "keyword" },
+          "order_date": {
+            "type": "date",
+            "format": "date_optional_time"
+          },
+          "country": { "type": "keyword" },
+          "region": { "type": "keyword" },
+          "order_priority": { "type": "keyword" },
+          "ship_date": {
+            "type": "date",
+            "format": "date_optional_time"
+          },
+          "units_sold": { "type": "integer" },
+          "item_type": { "type": "keyword" },
+          "sales_channel": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+
